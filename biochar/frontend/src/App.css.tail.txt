@@ -1,0 +1,30 @@
+    flex-direction: column;
+  }
+}
+    background: var(--c-off-white);
+    border: 1px solid var(--c-border);
+    padding: 8px;
+    border-radius: 12px;
+    color: var(--c-dark);
+  }
+  
+  .navbar.menu-open .mobile-menu-toggle {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+rk);
+  }
+
+  @keyframes mobileNavPop {
+    from {
+      transform: translateY(100px) scale(0.9);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+}

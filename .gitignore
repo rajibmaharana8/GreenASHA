@@ -1,0 +1,7 @@
+# Ignore loose design and document files in the biochar directory
+biochar/*.pdf
+biochar/*.jpeg
+biochar/*.jpg
+biochar/*.png
+biochar/*.PNG
+biochar/*.JPEG
