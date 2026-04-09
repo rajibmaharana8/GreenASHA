@@ -5114,3 +5114,74 @@ footer {
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
+/* -- MOBILE VERTICAL SPACING OPTIMIZATIONS -- */
+@media (max-width: 768px) {
+  /* Reduce excessive top/bottom padding across all major sections */
+  .hero { padding: 40px 0 60px !important; }
+  .section-problem,
+  .section-solution,
+  .section-modules,
+  .section-process,
+  .section-usecases,
+  .section-value,
+  .section-tech,
+  .section-deploy,
+  .section-compliance,
+  .section-case-seamless,
+  .section-roi-premium,
+  .section-contact-full {
+    padding: 60px 0 !important;
+  }
+  
+  /* Reduce gaps inside grids */
+  .hero-grid,
+  .problems-grid,
+  .solution-inner,
+  .value-grid,
+  .deploy-grid,
+  .compliance-grid,
+  ul.solution-bullets {
+    gap: 24px !important;
+  }
+  
+  .roi-dashboard-new,
+  .contact-grid-wrap,
+  .case-stats-pane {
+    gap: 32px !important;
+  }
+  
+  /* Compact cards */
+  .module-card, 
+  .problem-cell,
+  .deploy-card,
+  .value-card {
+    padding: 28px 24px !important;
+  }
+  
+  .sol-stat { gap: 4px !important; }
+  
+  /* Tighten Headers */
+  .modules-header,
+  .process-header,
+  .usecases-header,
+  .tech-header,
+  .deploy-header,
+  .problem-intro {
+    margin-bottom: 32px !important;
+  }
+
+  /* Make footers tighter */
+  footer {
+    padding: 48px 0 24px !important;
+  }
+  
+  /* Squeeze dashboards */
+  .roi-monitor,
+  .roi-console { 
+    padding: 24px !important; 
+  }
+  .monitor-card { padding: 16px !important; }
+  
+  /* Process Flow Steps vertical tightness */
+  .process-step { margin-bottom: 24px !important; }
+}
