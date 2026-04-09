@@ -1371,13 +1371,7 @@ ul.solution-bullets {
   margin-bottom: 64px;
 }
 
-.usecases-header .section-label {
-  color: var(--c-gray) !important;
-}
-
-.usecases-header h2 {
-  color: var(--c-dark) !important;
-}
+/* Color overrides removed to rely on inline JSX and allow dark themes */
 
 .usecases-list {
   display: grid;
@@ -1408,35 +1402,47 @@ ul.solution-bullets {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
+.wog-case-card {
+  background-color: var(--c-dark); /* Fallback */
+}
+
 .wog-case-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.15;
-  background-image: url('/images/biochar.png'); /* Add texturing */
+  background-image: var(--bg-img);
   background-size: cover;
   background-position: center;
-  mix-blend-mode: overlay;
-  z-index: -1;
-  transition: opacity 0.4s ease;
+  z-index: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .wog-case-card:hover::before {
-  opacity: 0.3;
+  transform: scale(1.08); /* Interactive zoom */
 }
 
-.wog-case-card.card-dark {
-  background: linear-gradient(145deg, #122117 0%, #08110B 100%);
+/* Gradient Overlay ON TOP of the image */
+.wog-case-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
-.wog-case-card.card-green {
-  background: linear-gradient(145deg, #2E7D32 0%, #154619 100%);
+.wog-case-card.card-dark::after {
+  background: linear-gradient(145deg, rgba(18, 33, 23, 0.88) 0%, rgba(8, 17, 11, 0.95) 100%);
+}
+
+.wog-case-card.card-green::after {
+  background: linear-gradient(145deg, rgba(46, 125, 50, 0.88) 0%, rgba(21, 70, 25, 0.95) 100%);
 }
 
 .wog-card-inner {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 .wog-card-inner h4 {

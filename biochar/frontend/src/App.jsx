@@ -450,23 +450,23 @@ function HowItWorks() {
 /* ─── 6. USE CASES ─── */
 function UseCases() {
   const cases = [
-    { title: "Manufacturing Operations", desc: "Turn process residues into high-value biochar while offsetting factory emissions." },
-    { title: "Agricultural Supply Chains", desc: "Convert post-harvest field waste into verified permanent carbon storage." },
-    { title: "Municipal Solid Waste", desc: "Divert organic fractions from landfills into scalable carbon credentialing." },
-    { title: "Construction & Timber", desc: "Repurpose wood waste and forestry residues into tradeable carbon certificates." },
-    { title: "Logistics & Corporate", desc: "Achieve net-negative campuses while monetizing side-stream organic material." },
+    { title: "Manufacturing Operations", desc: "Turn process residues into high-value biochar while offsetting factory emissions.", img: "https://images.unsplash.com/photo-1565514020179-026b92b6d788?auto=format&fit=crop&w=800&q=80" },
+    { title: "Agricultural Supply Chains", desc: "Convert post-harvest field waste into verified permanent carbon storage.", img: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80" },
+    { title: "Municipal Solid Waste", desc: "Divert organic fractions from landfills into scalable carbon credentialing.", img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80" },
+    { title: "Construction & Timber", desc: "Repurpose wood waste and forestry residues into tradeable carbon certificates.", img: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80" },
+    { title: "Logistics & Corporate", desc: "Achieve net-negative campuses while monetizing side-stream organic material.", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" },
   ];
   return (
     <section className="section-usecases">
       <div className="usecases-bg-network"></div>
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div className="usecases-header">
-          <span className="section-label" style={{ color: "rgba(255,255,255,0.7)" }}>Industries We Serve</span>
-          <h2 style={{ color: "#fff" }}>Built for scale across every sector generating organic waste.</h2>
+          <span className="section-label" style={{ color: "var(--c-green-accent)" }}>Industries We Serve</span>
+          <h2 style={{ color: "#ffffff" }}>Built for scale across every sector generating organic waste.</h2>
         </div>
         <div className="usecases-list">
-          {cases.map(({ title, desc }, i) => (
-            <div key={i} className={`wog-case-card ${i % 2 === 0 ? 'card-dark' : 'card-green'}`}>
+          {cases.map(({ title, desc, img }, i) => (
+            <div key={i} className={`wog-case-card ${i % 2 === 0 ? 'card-dark' : 'card-green'}`} style={{ "--bg-img": `url('${img}')` }}>
               <div className="wog-card-inner">
                 <h4>{title}</h4>
                 <div className="wog-divider"></div>
