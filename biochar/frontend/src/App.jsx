@@ -450,24 +450,28 @@ function HowItWorks() {
 /* ─── 6. USE CASES ─── */
 function UseCases() {
   const cases = [
-    { Icon: Factory, name: "Manufacturing" },
-    { Icon: Wheat, name: "Agriculture" },
-    { Icon: Building2, name: "Municipal Waste" },
-    { Icon: Hammer, name: "Construction" },
-    { Icon: GraduationCap, name: "Institutions" },
+    { title: "Manufacturing Operations", desc: "Turn process residues into high-value biochar while offsetting factory emissions." },
+    { title: "Agricultural Supply Chains", desc: "Convert post-harvest field waste into verified permanent carbon storage." },
+    { title: "Municipal Solid Waste", desc: "Divert organic fractions from landfills into scalable carbon credentialing." },
+    { title: "Construction & Timber", desc: "Repurpose wood waste and forestry residues into tradeable carbon certificates." },
+    { title: "Logistics & Corporate", desc: "Achieve net-negative campuses while monetizing side-stream organic material." },
   ];
   return (
     <section className="section-usecases">
-      <div className="container">
+      <div className="usecases-bg-network"></div>
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div className="usecases-header">
-          <span className="section-label">Industries We Serve</span>
-          <h2>Built for scale across every sector generating organic waste.</h2>
+          <span className="section-label" style={{ color: "rgba(255,255,255,0.7)" }}>Industries We Serve</span>
+          <h2 style={{ color: "#fff" }}>Built for scale across every sector generating organic waste.</h2>
         </div>
         <div className="usecases-list">
-          {cases.map(({ Icon, name }, i) => (
-            <div key={i} className="usecase-item">
-              <div className="usecase-icon"><Icon size={26} strokeWidth={1.5} /></div>
-              <h4>{name}</h4>
+          {cases.map(({ title, desc }, i) => (
+            <div key={i} className={`wog-case-card ${i % 2 === 0 ? 'card-dark' : 'card-green'}`}>
+              <div className="wog-card-inner">
+                <h4>{title}</h4>
+                <div className="wog-divider"></div>
+                <p>{desc}</p>
+              </div>
             </div>
           ))}
         </div>
