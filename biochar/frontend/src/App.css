@@ -1421,7 +1421,7 @@ ul.solution-bullets {
   transform: scale(1.08); /* Interactive zoom */
 }
 
-/* Gradient Overlay ON TOP of the image */
+/* Vertical Gradient Overlay to keep image visible at top, and text readable at bottom */
 .wog-case-card::after {
   content: '';
   position: absolute;
@@ -1430,16 +1430,18 @@ ul.solution-bullets {
 }
 
 .wog-case-card.card-dark::after {
-  background: linear-gradient(145deg, rgba(18, 33, 23, 0.88) 0%, rgba(8, 17, 11, 0.95) 100%);
+  background: linear-gradient(to bottom, rgba(18, 33, 23, 0.1) 0%, rgba(18, 33, 23, 0.7) 40%, rgba(8, 17, 11, 0.98) 80%, rgba(8, 17, 11, 1) 100%);
 }
 
 .wog-case-card.card-green::after {
-  background: linear-gradient(145deg, rgba(46, 125, 50, 0.88) 0%, rgba(21, 70, 25, 0.95) 100%);
+  background: linear-gradient(to bottom, rgba(46, 125, 50, 0.2) 0%, rgba(30, 85, 33, 0.7) 40%, rgba(21, 70, 25, 0.98) 80%, rgba(15, 50, 18, 1) 100%);
 }
 
 .wog-card-inner {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end; /* Push content to bottom where it's dark */
+  padding-top: 80px; /* Force image to be visible at top */
   height: 100%;
   position: relative;
   z-index: 2;
