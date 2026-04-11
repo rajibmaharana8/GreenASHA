@@ -51,14 +51,39 @@ function Navbar({ onDemoClick }) {
     };
   }, [isNavigating, mobileMenuOpen]);
 
-  const handleNavClick = useCallback(() => {
+  const handleNavClick = useCallback((e, targetId) => {
+    e.preventDefault();
     setIsNavigating(true);
     setDirection('up');
     setMobileMenuOpen(false);
 
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      // Temporarily disable smooth scroll if it's there
+      document.documentElement.style.scrollBehavior = 'auto';
+
+      // Calculate position offset for navbar
+      const yOffset = -80;
+      const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+      
+      // Jump directly
+      window.scrollTo({ top: y, behavior: 'instant' });
+
+      // Animate fade-in from downward to upward
+      gsap.fromTo(targetElement,
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', clearProps: 'all' }
+      );
+
+      // Restore style
+      setTimeout(() => {
+        document.documentElement.style.scrollBehavior = '';
+      }, 50);
+    }
+
     if (navigationTimeoutRef.current) clearTimeout(navigationTimeoutRef.current);
     navigationTimeoutRef.current = setTimeout(() => setIsNavigating(false), 1500);
-  }, [isNavigating]);
+  }, []);
 
   const handleDemoClick = (e) => {
     setMobileMenuOpen(false);
@@ -75,23 +100,23 @@ function Navbar({ onDemoClick }) {
 
         <div className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
           <div className="nav-menu">
-            <a href="#modules" onClick={handleNavClick} style={{ "--i": 1 }}>
+            <a href="#modules" onClick={(e) => handleNavClick(e, 'modules')} style={{ "--i": 1 }}>
               <span>PRODUCTS</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#solutions" onClick={handleNavClick} style={{ "--i": 2 }}>
+            <a href="#solutions" onClick={(e) => handleNavClick(e, 'solutions')} style={{ "--i": 2 }}>
               <span>SOLUTIONS</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#science" onClick={handleNavClick} style={{ "--i": 3 }}>
+            <a href="#science" onClick={(e) => handleNavClick(e, 'science')} style={{ "--i": 3 }}>
               <span>HOW IT WORKS</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#technology" onClick={handleNavClick} style={{ "--i": 4 }}>
+            <a href="#technology" onClick={(e) => handleNavClick(e, 'technology')} style={{ "--i": 4 }}>
               <span>TECHNOLOGY</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#roi" onClick={handleNavClick} style={{ "--i": 5 }}>
+            <a href="#roi" onClick={(e) => handleNavClick(e, 'roi')} style={{ "--i": 5 }}>
               <span>ROI CALCULATOR</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
