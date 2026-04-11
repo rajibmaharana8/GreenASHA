@@ -54,10 +54,10 @@ function Navbar({ onDemoClick }) {
   const handleNavClick = useCallback(() => {
     setIsNavigating(true);
     setDirection('up');
-    setMobileMenuOpen(false); 
-    
+    setMobileMenuOpen(false);
+
     if (navigationTimeoutRef.current) clearTimeout(navigationTimeoutRef.current);
-    navigationTimeoutRef.current = setTimeout(() => setIsNavigating(false), 1500); 
+    navigationTimeoutRef.current = setTimeout(() => setIsNavigating(false), 1500);
   }, [isNavigating]);
 
   const handleDemoClick = (e) => {
@@ -72,31 +72,31 @@ function Navbar({ onDemoClick }) {
           <img src="/images/GreenASHA-Logo.png" alt="GreenASHA Logo" className="brand-img" />
           <span className="tagline">AI Carbon Infrastructure</span>
         </a>
-        
+
         <div className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
           <div className="nav-menu">
-            <a href="#modules" onClick={handleNavClick} style={{"--i": 1}}>
+            <a href="#modules" onClick={handleNavClick} style={{ "--i": 1 }}>
               <span>PRODUCTS</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#solutions" onClick={handleNavClick} style={{"--i": 2}}>
+            <a href="#solutions" onClick={handleNavClick} style={{ "--i": 2 }}>
               <span>SOLUTIONS</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#science" onClick={handleNavClick} style={{"--i": 3}}>
+            <a href="#science" onClick={handleNavClick} style={{ "--i": 3 }}>
               <span>HOW IT WORKS</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#technology" onClick={handleNavClick} style={{"--i": 4}}>
+            <a href="#technology" onClick={handleNavClick} style={{ "--i": 4 }}>
               <span>TECHNOLOGY</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
-            <a href="#roi" onClick={handleNavClick} style={{"--i": 5}}>
+            <a href="#roi" onClick={handleNavClick} style={{ "--i": 5 }}>
               <span>ROI CALCULATOR</span>
               <ArrowRight size={20} className="chevron mobile-only" />
             </a>
           </div>
-          
+
           <div className="mobile-menu-footer mobile-only">
             <button className="btn btn-green full-btn" onClick={handleDemoClick}>Get a Demo</button>
           </div>
@@ -104,8 +104,8 @@ function Navbar({ onDemoClick }) {
           <button className="btn btn-dark nav-cta desktop-only" onClick={handleDemoClick}>Get a Demo</button>
         </div>
 
-        <button 
-          className={`hamburger ${mobileMenuOpen ? 'is-active' : ''}`} 
+        <button
+          className={`hamburger ${mobileMenuOpen ? 'is-active' : ''}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle Menu"
         >
@@ -128,7 +128,7 @@ function Hero({ onDemoClick }) {
             Build Carbon-Negative Infrastructure with <span className="accent">AI</span>
           </h1>
           <p className="hero-sub">
-            The integrated platform for AI intelligence, biochar production, and high-integrity carbon credits — turning waste into verified carbon assets at scale.
+            The integrated platform for AI intelligence, biochar production, and high-integrity carbon credits. We turn waste into verified carbon assets at scale.
           </p>
           <ul className="hero-bullets">
             {[
@@ -178,7 +178,7 @@ function TrustedBy() {
 /* ─── 2. PROBLEM ─── */
 function Problem() {
   const problems = [
-    { title: "Agricultural Waste Burning", body: "Uncontrolled burning releases methane and CO₂ with zero economic return — a systemic failure in agricultural value chains." },
+    { title: "Agricultural Waste Burning", body: "Uncontrolled burning releases methane and CO₂ with zero economic return. It represents a systemic failure in agricultural value chains." },
     { title: "Lack of Carbon Monetization", body: "Most organizations have no pathway to convert sustainability actions into verified, tradeable carbon assets." },
     { title: "Inefficient Systems", body: "Traditional biomass processing lacks real-time optimization, causing yield losses and unreliable output quality." },
     { title: "No Intelligence Layer", body: "Sustainability infrastructure operates without AI, making it impossible to predict, optimize, or verify carbon outcomes." },
@@ -212,9 +212,10 @@ function Solution() {
       <div className="solution-inner">
         {/* Left: Text */}
         <div className="solution-body">
+          <span className="section-label" style={{ marginBottom: '16px', display: 'inline-block' }}>Our Platform</span>
           <h2>An integrated vertical for AI-powered carbon removal.</h2>
           <p>GreenASHA is not a hardware product. It is a full-stack carbon infrastructure platform that embeds AI intelligence across every stage of the biochar production and carbon credentialing process.</p>
-          <ul className="hero-bullets solution-bullets" style={{ marginBottom: '40px' }}>
+          <ul className="hero-bullets solution-bullets">
             {[
               "Biochar production & carbonization",
               "AI process optimization engine",
@@ -224,23 +225,23 @@ function Solution() {
               <li key={i}><div className="check"><Check size={14} strokeWidth={3} /></div>{c}</li>
             ))}
           </ul>
-          <div className="solution-tagline">"From Waste to Verified Carbon Assets"</div>
+          <div className="solution-tagline">From Waste to Verified Carbon Assets</div>
         </div>
-        {/* Right: Image */}
+
+        {/* Right: Image + Stats */}
         <div className="solution-img-col">
           <div className="solution-img-mask">
             <img src="/images/biochar.png" alt="Biochar science — porous carbon structure" />
           </div>
-
-          {/* Overlapping Glassmorphic Stats Card */}
+          {/* Stats Strip below image */}
           <div className="solution-stats-card">
             <div className="sol-stat">
-              <span className="sol-stat-num">500+<span>yr</span></span>
-              <span className="sol-stat-label">Carbon permanence</span>
+              <span className="sol-stat-num">500<span>+ yr</span></span>
+              <span className="sol-stat-label">Carbon Permanence</span>
             </div>
             <div className="sol-stat">
-              <span className="sol-stat-num">30–60</span>
-              <span className="sol-stat-label">Day deployment</span>
+              <span className="sol-stat-num">30<span>–60</span></span>
+              <span className="sol-stat-label">Day Deployment</span>
             </div>
             <div className="sol-stat">
               <span className="sol-stat-num">2.4<span>×</span></span>
@@ -257,7 +258,7 @@ function Modules() {
   const [activeSlide, setActiveSlide] = useState(0);
   const mods = [
     { Icon: Leaf, title: "Biochar Unit", sub: "Modular Hardware", body: "Scalable, high-efficiency pyrolysis reactors designed for consistent, high-purity biochar output across any feedstock type." },
-    { Icon: Brain, title: "AI Engine", sub: "Prediction + Automation", body: "Continuous learning models that optimize reactor conditions in real time — maximizing yield and minimizing energy input." },
+    { Icon: Brain, title: "AI Engine", sub: "Prediction + Automation", body: "Continuous learning models that optimize reactor conditions in real time, maximizing yield and minimizing energy input." },
     { Icon: BarChart2, title: "Carbon MRV", sub: "Tracking + Compliance", body: "Digital monitoring, reporting and verification with full audit trails. Compliant with Verra VCS and Puro.earth frameworks." },
     { Icon: LayoutDashboard, title: "Intelligence Dashboard", sub: "Monitoring + Analytics", body: "Unified command center for financial and climate performance. Track carbon credits, production yield, and ROI live." },
   ];
@@ -266,14 +267,14 @@ function Modules() {
     const scrollLeft = e.target.scrollLeft;
     const scrollWidth = e.target.scrollWidth;
     const clientWidth = e.target.clientWidth;
-    
+
     // Percentage-based calculation is more robust for centered sliders
     const scrollPossible = scrollWidth - clientWidth;
     if (scrollPossible <= 0) return;
-    
+
     const percentage = scrollLeft / scrollPossible;
     const newIndex = Math.round(percentage * (mods.length - 1));
-    
+
     if (newIndex !== activeSlide && newIndex >= 0 && newIndex < mods.length) {
       setActiveSlide(newIndex);
     }
@@ -285,7 +286,7 @@ function Modules() {
         <div className="modules-header">
           <span className="section-label">Product Architecture</span>
           <h2>Modular by design. Unified in intelligence.</h2>
-          <p>Each component works independently or as an integrated stack — built for enterprise carbon operations.</p>
+          <p>Each component works independently or as an integrated stack, built for enterprise carbon operations.</p>
         </div>
         <div className="modules-grid slider-container" onScroll={handleScroll}>
           {mods.map(({ Icon, title, sub, body }, i) => (
@@ -297,7 +298,7 @@ function Modules() {
             </div>
           ))}
         </div>
-        
+
         {/* Mobile Indicator Dots */}
         <div className="slider-dots phone-only">
           {mods.map((_, i) => (
@@ -373,41 +374,41 @@ function HowItWorks() {
   }, { scope: sectionRef });
 
   const steps = [
-    { 
-      label: "Feedstock Sourcing", 
+    {
+      label: "Feedstock Sourcing",
       desc: "Collection of agricultural waste, wood chips, or industrial biomass with <20% moisture content.",
       details: ["Moisture Sensing", "Contaminant Screening", "Volume Logging"],
-      Icon: Truck 
+      Icon: Truck
     },
-    { 
-      label: "Pre-Processing", 
+    {
+      label: "Pre-Processing",
       desc: "Automated shredding and drying to ensure uniform particle size and optimal pyrolysis conditions.",
       details: ["Hammer Milling", "Flash Drying", "Magnetic Separation"],
-      Icon: Settings 
+      Icon: Settings
     },
-    { 
-      label: "Continuous Pyrolysis", 
+    {
+      label: "Continuous Pyrolysis",
       desc: "Thermal decomposition in an oxygen-free environment at 450°C - 600°C using our screw reactor.",
       details: ["Oxygen Control", "Temp Stabilization", "Syngas Recovery"],
-      Icon: Flame 
+      Icon: Flame
     },
-    { 
-      label: "Biochar Quenching", 
+    {
+      label: "Biochar Quenching",
       desc: "Rapid cooling and stabilization of the biochar to prevent oxidation and lock in carbon.",
       details: ["Water Quenching", "Nutrient Loading", "Dust Suppression"],
-      Icon: Leaf 
+      Icon: Leaf
     },
-    { 
-      label: "AI Quality Analysis", 
+    {
+      label: "AI Quality Analysis",
       desc: "Real-time scanning of carbon content, surface area, and pore structure using edge AI.",
       details: ["Spectroscopy", "Purity Testing", "Yield Prediction"],
-      Icon: Search 
+      Icon: Search
     },
-    { 
-      label: "Credit Issuance", 
+    {
+      label: "Credit Issuance",
       desc: "Automated MRV data submission to global carbon registries for immediate credit generation.",
       details: ["Verra/Puro Sync", "Blockchain Ledger", "Revenue Payout"],
-      Icon: Coins 
+      Icon: Coins
     },
   ];
 
@@ -450,7 +451,7 @@ function HowItWorks() {
 /* ─── 6. USE CASES ─── */
 function UseCases() {
   const cases = [
-    { title: "Manufacturing Operations", desc: "Turn process residues into high-value biochar while offsetting factory emissions.", img: "https://images.unsplash.com/photo-1565514020179-026b92b6d788?auto=format&fit=crop&w=800&q=80" },
+    { title: "Manufacturing Operations", desc: "Turn process residues into high-value biochar while offsetting factory emissions.", img: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80" },
     { title: "Agricultural Supply Chains", desc: "Convert post-harvest field waste into verified permanent carbon storage.", img: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=800&q=80" },
     { title: "Municipal Solid Waste", desc: "Divert organic fractions from landfills into scalable carbon credentialing.", img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80" },
     { title: "Construction & Timber", desc: "Repurpose wood waste and forestry residues into tradeable carbon certificates.", img: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80" },
@@ -458,11 +459,10 @@ function UseCases() {
   ];
   return (
     <section className="section-usecases">
-      <div className="usecases-bg-network"></div>
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div className="usecases-header">
-          <span className="section-label" style={{ color: "var(--c-green-accent)" }}>Industries We Serve</span>
-          <h2 style={{ color: "#ffffff" }}>Built for scale across every sector generating organic waste.</h2>
+          <span className="section-label">Industries We Serve</span>
+          <h2>Built for scale across every sector generating organic waste.</h2>
         </div>
         <div className="usecases-list">
           {cases.map(({ title, desc, img }, i) => (
@@ -484,7 +484,7 @@ function UseCases() {
 function ValueProp() {
   const values = [
     { Icon: TrendingUp, title: "Revenue", body: "Dual income from biochar sales and verified carbon credits. Average payback in 16–22 months." },
-    { Icon: Globe, title: "Impact", body: "Measurable CO₂ removal and soil health improvement — with certificates your stakeholders can trust." },
+    { Icon: Globe, title: "Impact", body: "Measurable CO₂ removal and soil health improvement, with certificates your stakeholders can trust." },
     { Icon: Zap, title: "Efficiency", body: "AI-driven automation reduces labor costs and increases throughput by up to 24% versus manual operations." },
   ];
   return (
@@ -524,39 +524,52 @@ function TechSection() {
         <div className="tech-header">
           <span className="eyebrow">AI Intelligence</span>
           <h2>Intelligence that learns with every ton.</h2>
-          <p>Our AI engine doesn't just monitor — it continuously improves carbon outcomes across operations.</p>
+          <p>Our AI engine doesn't just monitor; it continuously improves carbon outcomes across every operation.</p>
         </div>
 
         <div className="tech-orb-wrap">
+          {/* Left feature cards */}
           <div className="tech-left-side">
             {leftFeats.map((f, i) => (
-              <div key={i} className={`tech-node node-left-${i + 1}`}>
-                <div className="node-icon"><f.Icon size={20} /></div>
-                <div className="node-text">
-                  <h4>{f.title}</h4>
-                  <p>{f.body}</p>
+              <div key={i} className="tech-feat-card">
+                <div className="feat-card-top">
+                  <div className="node-icon"><f.Icon size={18} /></div>
+                  <div className="feat-connector"></div>
                 </div>
-                <div className="node-line"></div>
+                <h4>{f.title}</h4>
+                <p>{f.body}</p>
               </div>
             ))}
           </div>
 
+          {/* Central animated orb */}
           <div className="tech-center-orb">
-            <div className="orb-glow"></div>
-            <div className="orb-inner">
-              <img src="/images/biochar_ai_core.png" alt="AI Core" />
+            <div className="ai-ring ai-ring-outer"></div>
+            <div className="ai-ring ai-ring-mid"></div>
+            <div className="ai-ring ai-ring-inner"></div>
+            <div className="orb-glow-bg"></div>
+            <div className="orb-core-shell">
+              <div className="orb-pulse-ring"></div>
+              <div className="orb-icon-wrap">
+                <Brain size={52} color="#4ade80" strokeWidth={1.1} />
+              </div>
             </div>
+            <div className="ai-dot dot-n"></div>
+            <div className="ai-dot dot-s"></div>
+            <div className="ai-dot dot-e"></div>
+            <div className="ai-dot dot-w"></div>
           </div>
 
+          {/* Right feature cards */}
           <div className="tech-right-side">
             {rightFeats.map((f, i) => (
-              <div key={i} className={`tech-node node-right-${i + 1}`}>
-                <div className="node-line"></div>
-                <div className="node-icon"><f.Icon size={20} /></div>
-                <div className="node-text">
-                  <h4>{f.title}</h4>
-                  <p>{f.body}</p>
+              <div key={i} className="tech-feat-card">
+                <div className="feat-card-top feat-card-top-right">
+                  <div className="feat-connector"></div>
+                  <div className="node-icon"><f.Icon size={18} /></div>
                 </div>
+                <h4>{f.title}</h4>
+                <p>{f.body}</p>
               </div>
             ))}
           </div>
@@ -620,7 +633,7 @@ function Compliance() {
           <span className="section-label">Compliance & Trust</span>
           <h2>Built to the highest global carbon standards.</h2>
           <p>Every GreenASHA deployment is designed to meet the strictest international carbon credentialing and pollution control requirements.</p>
-          
+
           <div className="compliance-items-grid">
             {items.map((label, i) => (
               <div key={i} className="compliance-badge">
@@ -649,7 +662,7 @@ function CaseStudy() {
   const stats = [
     { num: "1,200t", label: "Biomass Fixed", sub: "Verified outcome" },
     { num: "850t", label: "Carbon Removed", sub: "Permanent storage" },
-    { num: "2.4×", label: "Yield ROI", sub: "Farmer profit lift" },
+    { num: "2.4÷", label: "Yield ROI", sub: "Farmer profit lift" },
     { num: "48d", label: "Credit Speed", sub: "Time to market" },
   ];
 
@@ -657,26 +670,26 @@ function CaseStudy() {
     <section className="section-case-seamless">
       <div className="container">
         <div className="seamless-header">
-           <span className="eyebrow-top">Real-World Outcome</span>
-           <h2>Proven Impact: The Assam Pilot</h2>
-           <p>Validation of carbon-negative infrastructure in small-holder farming contexts. Transforming agricultural residue into industrial-grade assets.</p>
+          <span className="eyebrow-top">Real-World Outcome</span>
+          <h2>Proven Impact: The Assam Pilot</h2>
+          <p>Validation of carbon-negative infrastructure in small-holder farming contexts. Transforming agricultural residue into industrial-grade assets.</p>
         </div>
 
         <div className="seamless-dashboard">
           <div className="seamless-visual-pane">
-             <div className="vignette-mask">
-                <img src="/images/assam_pilot.png" alt="Assam Pilot" />
-             </div>
+            <div className="vignette-mask">
+              <img src="/images/assam_pilot.png" alt="Assam Pilot" />
+            </div>
           </div>
 
           <div className="seamless-stats-pane">
-             {stats.map((s, i) => (
-               <div key={i} className="seamless-stat-box">
-                  <span className="box-num">{s.num}</span>
-                  <span className="box-label">{s.label}</span>
-                  <span className="box-sub">{s.sub}</span>
-               </div>
-             ))}
+            {stats.map((s, i) => (
+              <div key={i} className="seamless-stat-box">
+                <span className="box-num">{s.num}</span>
+                <span className="box-label">{s.label}</span>
+                <span className="box-sub">{s.sub}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -688,7 +701,7 @@ function CaseStudy() {
 function ROICalculator({ onDemoClick }) {
   const [feedstock, setFeedstock] = useState(25);
   const [type, setType] = useState('biomass');
-  
+
   const types = [
     { id: 'biomass', label: 'AGRICULTURAL', icon: <Wheat size={18} /> },
     { id: 'wood', label: 'FORESTRY', icon: <Factory size={18} /> },
@@ -714,8 +727,8 @@ function ROICalculator({ onDemoClick }) {
               <label className="label-tech">1. FEEDSTOCK SOURCE</label>
               <div className="type-tiles-modern">
                 {types.map(t => (
-                  <button 
-                    key={t.id} 
+                  <button
+                    key={t.id}
                     className={`type-tile-new ${type === t.id ? 'active' : ''}`}
                     onClick={() => setType(t.id)}
                   >
@@ -731,41 +744,41 @@ function ROICalculator({ onDemoClick }) {
                 <label className="label-tech">2. DAILY THROUGHPUT</label>
                 <span className="val-big">{feedstock}t/day</span>
               </div>
-              <input 
-                type="range" 
-                min="10" max="500" step="10" 
-                value={feedstock} 
-                onChange={e => setFeedstock(+e.target.value)} 
+              <input
+                type="range"
+                min="10" max="500" step="10"
+                value={feedstock}
+                onChange={e => setFeedstock(+e.target.value)}
                 className="pro-slider"
               />
             </div>
-            
+
             <button className="btn btn-green full-btn" style={{ marginTop: '20px' }} onClick={onDemoClick}>Download Investment Thesis</button>
           </div>
 
           {/* Right: Results Dash */}
           <div className="roi-monitor">
-             <div className="monitor-card primary">
-                <span className="monitor-label">EST. ANNUAL REVENUE (USD)</span>
-                <div className="monitor-main">${revenue.toLocaleString()}</div>
-                <div className="monitor-footer">Combined Biochar + CORC Revenue</div>
-             </div>
+            <div className="monitor-card primary">
+              <span className="monitor-label">EST. ANNUAL REVENUE (USD)</span>
+              <div className="monitor-main">${revenue.toLocaleString()}</div>
+              <div className="monitor-footer">Combined Biochar + CORC Revenue</div>
+            </div>
 
-             <div className="monitor-grid">
-                <div className="monitor-card secondary">
-                   <span className="monitor-label">CO₂ SEQUESTERED</span>
-                   <div className="monitor-sub">{co2.toLocaleString()} t</div>
-                </div>
-                <div className="monitor-card secondary">
-                   <span className="monitor-label">EST. PAYBACK</span>
-                   <div className="monitor-sub">1.6 Yrs</div>
-                </div>
-             </div>
+            <div className="monitor-grid">
+              <div className="monitor-card secondary">
+                <span className="monitor-label">CO₂ SEQUESTERED</span>
+                <div className="monitor-sub">{co2.toLocaleString()} t</div>
+              </div>
+              <div className="monitor-card secondary">
+                <span className="monitor-label">EST. PAYBACK</span>
+                <div className="monitor-sub">1.6 Yrs</div>
+              </div>
+            </div>
 
-             <div className="monitor-quote">
-                <Zap size={14} color="#00A843" />
-                <span>Equivalent to the footprint of <strong>{(co2/4.6).toFixed(0).toLocaleString()}</strong> homes.</span>
-             </div>
+            <div className="monitor-quote">
+              <Zap size={14} color="#00A843" />
+              <span>Equivalent to the footprint of <strong>{(co2 / 4.6).toFixed(0).toLocaleString()}</strong> homes.</span>
+            </div>
           </div>
         </div>
       </div>
@@ -783,49 +796,49 @@ function ContactUs({ onDemoClick }) {
             <span className="eyebrow-tech">Get in Touch</span>
             <h2>Start Your Carbon Journey</h2>
             <p>Ready to deploy high-integrity infrastructure? Connect with our technical team for a custom feasibility study.</p>
-            
+
             <div className="contact-cards-stack">
               <div className="contact-info-card">
-                 <div className="info-icon"><Globe size={20} /></div>
-                 <div className="info-text">
-                    <strong>Global Headquarters</strong>
-                    <span>501, 5th Floor, Tower B, <br/>Global Business Park, Gurgaon, India</span>
-                 </div>
+                <div className="info-icon"><Globe size={20} /></div>
+                <div className="info-text">
+                  <strong>Global Headquarters</strong>
+                  <span>501, 5th Floor, Tower B, <br />Global Business Park, Gurgaon, India</span>
+                </div>
               </div>
               <div className="contact-info-card">
-                 <div className="info-icon"><ArrowRight size={20} /></div>
-                 <div className="info-text">
-                    <strong>Email Inquiries</strong>
-                    <span>contact@greenasha.com</span>
-                 </div>
+                <div className="info-icon"><ArrowRight size={20} /></div>
+                <div className="info-text">
+                  <strong>Email Inquiries</strong>
+                  <span>contact@greenasha.com</span>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="contact-form-side">
-             <form className="project-form">
-                <div className="form-row">
-                   <input type="text" placeholder="Full Name" required />
-                   <input type="email" placeholder="Work Email" required />
-                </div>
-                <div className="form-row">
-                   <input type="text" placeholder="Organization" required />
-                   <input type="text" placeholder="Mobile Number" required />
-                </div>
-                <div className="form-group">
-                   <select required>
-                      <option value="">Select Project Type</option>
-                      <option value="Agri-Waste">Agricultural Waste</option>
-                      <option value="Forestry">Forestry / Wood Waste</option>
-                      <option value="Municipal">Municipal Solid Waste</option>
-                   </select>
-                </div>
-                <div className="form-group">
-                   <textarea placeholder="Tell us about your project scale and goals..." rows="4"></textarea>
-                </div>
-                <button type="submit" className="btn btn-green full-btn">Submit Project Inquiry</button>
-                <p className="form-alt">Or prefer a quick booking? <button type="button" className="text-link" onClick={onDemoClick}>Schedule a Demo</button></p>
-             </form>
+            <form className="project-form">
+              <div className="form-row">
+                <input type="text" placeholder="Full Name" required />
+                <input type="email" placeholder="Work Email" required />
+              </div>
+              <div className="form-row">
+                <input type="text" placeholder="Organization" required />
+                <input type="text" placeholder="Mobile Number" required />
+              </div>
+              <div className="form-group">
+                <select required>
+                  <option value="">Select Project Type</option>
+                  <option value="Agri-Waste">Agricultural Waste</option>
+                  <option value="Forestry">Forestry / Wood Waste</option>
+                  <option value="Municipal">Municipal Solid Waste</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <textarea placeholder="Tell us about your project scale and goals..." rows="4"></textarea>
+              </div>
+              <button type="submit" className="btn btn-green full-btn">Submit Project Inquiry</button>
+              <p className="form-alt">Or prefer a quick booking? <button type="button" className="text-link" onClick={onDemoClick}>Schedule a Demo</button></p>
+            </form>
           </div>
         </div>
       </div>
@@ -895,7 +908,7 @@ function ScheduleModal({ isOpen, onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content calendly-modal-wrap" onClick={e => e.stopPropagation()}>
         <button className="modal-close-btn" onClick={onClose}>&times;</button>
-        
+
         <div className="modal-header-simple">
           <span className="eyebrow-tech" style={{ color: '#00A843' }}>BOOK A SESSION</span>
           <h3 style={{ fontSize: '1.5rem', marginTop: '8px' }}>Schedule a Meeting</h3>
@@ -903,17 +916,17 @@ function ScheduleModal({ isOpen, onClose }) {
         </div>
 
         {/* Optimized Official Calendly Inline Widget Container */}
-        <div 
-          className="calendly-inline-widget" 
-          style={{ 
-            minWidth: '320px', 
+        <div
+          className="calendly-inline-widget"
+          style={{
+            minWidth: '320px',
             height: '540px', /* Reduced for a more professional, snap-to-content look */
             backgroundColor: '#ffffff',
             borderRadius: '16px',
             overflow: 'hidden',
-          }} 
+          }}
         />
-        
+
         <div className="modal-footer-info" style={{ marginTop: '16px' }}>
           <p style={{ fontSize: '10px' }}>Global Timezone Support Enabled</p>
         </div>
@@ -934,7 +947,7 @@ export default function App() {
   return (
     <div className="site-wrapper">
       <Navbar onDemoClick={toggleModal} />
-      
+
       <main id="main-content">
         <Hero onDemoClick={toggleModal} />
         <TrustedBy />
