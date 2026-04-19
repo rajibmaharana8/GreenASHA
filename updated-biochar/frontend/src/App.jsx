@@ -1,30 +1,96 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { 
+  BrainCircuit, Radio, Layers, Globe, Mail, ArrowUpRight, 
+  Award, Weight, Clock, Leaf, Search, HeartHandshake, Banknote, Calendar 
+} from 'lucide-react';
 import './App.css';
 
 /* ─── NAVBAR ─── */
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    setMobileMenuOpen(false); // Close menu on click
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    // Instantly jump — no smooth scroll
+    window.scrollTo({ top: target.offsetTop - 80, behavior: 'instant' });
+
+    // Reset reveal elements so they can re-animate
+    const reveals = target.querySelectorAll('.reveal');
+    reveals.forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth; // force reflow
+    });
+
+    // Fire the fade-in on next frame
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        reveals.forEach(el => el.classList.add('visible'));
+      });
+    });
+
+    // Flash the whole section
+    target.classList.remove('section-flash');
+    void target.offsetWidth;
+    target.classList.add('section-flash');
+    setTimeout(() => target.classList.remove('section-flash'), 700);
+  };
+
   return (
-    <nav className={`navbar ${scrolled ? 'is-scrolled' : ''}`}>
+    <nav className={`navbar ${scrolled ? 'is-scrolled' : ''} ${mobileMenuOpen ? 'menu-open' : ''}`}>
       <div className="nav-inner">
-        <a href="/" className="nav-logo">
+        <a href="/" className="nav-logo" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMobileMenuOpen(false); }}>
           <img src="/images/GreenASHA-Logo.png" alt="GreenASHA" className="brand-img" />
           <span className="tagline">Pioneering Sustainable Horizons</span>
         </a>
-        <div className="nav-links">
+        <div className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
           <div className="nav-menu">
-            <a href="#process">Process</a>
-            <a href="#permanence">Permanence</a>
-            <a href="#credits">Carbon Credits</a>
+            <a href="#process" onClick={e => handleNavClick(e, 'process')} style={{ "--i": 1 }}>
+              <Layers size={18} className="nav-icon" />
+              Process
+            </a>
+            <a href="#permanence" onClick={e => handleNavClick(e, 'permanence')} style={{ "--i": 2 }}>
+              <Clock size={18} className="nav-icon" />
+              Permanence
+            </a>
+            <a href="#credits" onClick={e => handleNavClick(e, 'credits')} style={{ "--i": 3 }}>
+              <Award size={18} className="nav-icon" />
+              Carbon Credits
+            </a>
+            <a href="#intelligence" onClick={e => handleNavClick(e, 'intelligence')} style={{ "--i": 4 }}>
+              <BrainCircuit size={18} className="nav-icon" />
+              Intelligence
+            </a>
           </div>
-          <button className="btn btn-green">Get a Demo</button>
+          <div className="nav-footer-mobile">
+            <button className="btn btn-green full-btn">Get a Demo</button>
+            <div className="nav-system-status">
+              <span className="status-dot"></span>
+              SYSTEMS OPERATIONAL
+            </div>
+          </div>
+          <button className="btn btn-green nav-cta-desktop">Get a Demo</button>
         </div>
+        
+        <button 
+          className={`hamburger ${mobileMenuOpen ? 'is-active' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          <span className="line"></span>
+          <span className="line"></span>
+          <span className="line"></span>
+        </button>
       </div>
     </nav>
   );
@@ -155,12 +221,6 @@ const PyrolysisStory = () => {
         {/* Zone tick marks */}
         <line x1={x1} y1="-57" x2={x1} y2="-43" stroke={tColor} strokeWidth={bwStr} opacity="0.6" />
         <line x1={x2} y1="-57" x2={x2} y2="-43" stroke={tColor} strokeWidth={bwStr} opacity="0.6" />
-        {/* Badge pill */}
-        <rect x={cx - badgeW / 2} y="-124" width={badgeW} height="18" rx="9"
-          fill={bgRgba} stroke={bkStroke} strokeWidth={bwStr} />
-        <text x={cx} y="-112" className="ph-badge-text" style={{ fill: tColor }}>
-          {`● PHASE ${num}`}
-        </text>
         {/* 2-line title */}
         <text x={cx} y="-92" className="ph-title-label">{line1}</text>
         {line2 && <text x={cx} y="-71" className="ph-title-label">{line2}</text>}
@@ -195,7 +255,7 @@ const PyrolysisStory = () => {
               Phase 4: translate(150,0) — capture station
           */}
           <svg ref={svgRef} className="blueprint-svg"
-            viewBox="40 -128 1640 808" preserveAspectRatio="xMidYMid meet">
+            viewBox="-20 -128 1780 808" preserveAspectRatio="xMidYMid meet">
             <defs>
               <pattern id="bp-grid" width="45" height="45" patternUnits="userSpaceOnUse">
                 <path d="M 45 0 L 0 0 0 45" fill="none" stroke="rgba(141,220,110,0.04)" strokeWidth="0.5" />
@@ -592,7 +652,6 @@ const PyrolysisStory = () => {
               className={`phase-card ${revealedCards[i] ? 'revealed' : ''} ${activeCard === i && !showFlow ? 'current' : ''} ${showFlow ? 'done' : ''}`}
               style={{ '--card-color': ph.color }}>
               <div className="pc-top">
-                <span className="pc-num">{ph.id}</span>
                 <span className="pc-lbl">{ph.label}</span>
               </div>
               <div className="pc-short">{ph.short}</div>
@@ -609,29 +668,6 @@ const PyrolysisStory = () => {
 
 const Hero = () => {
   const [particles] = useState(() => Array.from({ length: 35 }));
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // Handle bar fills
-          entry.target.querySelectorAll('.bar-fill').forEach(bar => {
-            if (bar.dataset.width) {
-              setTimeout(() => {
-                bar.style.width = bar.dataset.width;
-              }, 200);
-            }
-          });
-        }
-      });
-    }, { threshold: 0.15 });
-
-    const targets = document.querySelectorAll('.reveal');
-    targets.forEach(t => observer.observe(t));
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section className="hero">
@@ -671,189 +707,171 @@ const Hero = () => {
 };
 
 const TransformationFlow = () => {
+  const steps = [
+    {
+      num: "01",
+      title: "Sustainable Sourcing",
+      motive: "WASTE (Input)",
+      desc: "We intercept thousands of tonnes of agricultural residue—rice husks, coconut shells, and straw—that would otherwise be burnt or left to decay, releasing CO2 and methane.",
+      specs: [
+        { label: "Material", value: "Agricultural Byproducts" },
+        { label: "Collection", value: "Direct from Farms" },
+        { label: "Carbon State", value: "Biogenic (Fixed)" }
+      ],
+      pills: ["Circular Economy", "Zero Burning"]
+    },
+    {
+      num: "02",
+      title: "High-Heat Carbonization",
+      motive: "PROCESS (Conversion)",
+      desc: "Our localized pyrolysis units heat the biomass to 600°C in a sealed, oxygen-free reactor. This triggers thermochemical decomposition, separating carbon from volatile gases.",
+      specs: [
+        { label: "Method", value: "Controlled Pyrolysis" },
+        { label: "Temp Range", value: "550°C — 750°C" },
+        { label: "Energy", value: "95% Heat Recovery" }
+      ],
+      pills: ["Methane Capture", "Oxygen-Free"]
+    },
+    {
+      num: "03",
+      title: "Biochar Stabilization",
+      motive: "CHAR (Output)",
+      desc: "The resulting biochar is a highly porous, stable form of carbon. Unlike raw wood or straw, its aromatic structure is physically permanent and cannot be broken down by microbes.",
+      specs: [
+        { label: "Carbon Fix", value: "85% Yield" },
+        { label: "Surface Area", value: "400 m²/g" },
+        { label: "Life Expectancy", value: "1000+ Years" }
+      ],
+      pills: ["Recalcitrant Carbon", "High Porosity"]
+    },
+    {
+      num: "04",
+      title: "Ecological Deployment",
+      motive: "IMPACT (Regeneration)",
+      desc: "Biochar is integrated into degraded agricultural soil. It acts as a permanent sponge, locking in moisture and nutrients while significantly reducing the need for chemical fertilizers.",
+      specs: [
+        { label: "Soil Benefit", value: "Water Retention +30%" },
+        { label: "Yield Uplift", value: "Up to 25%" },
+        { label: "Fertilizer Reduction", value: "15% Average" }
+      ],
+      pills: ["Soil Health", "Climate Resilience"]
+    },
+    {
+      num: "05",
+      title: "Carbon Credit Minting",
+      motive: "CREDITS (Value)",
+      desc: "The entire lifecycle is digitally tracked and verified. Each tonne of sequestered carbon generates a high-integrity Carbon Removal Credit (CORC) for corporate net-zero goals.",
+      specs: [
+        { label: "Standard", value: "Puro.earth / Verra" },
+        { label: "Unit", value: "1 Tonne CO2e Removed" },
+        { label: "Integrity", value: "MRV Verified" }
+      ],
+      pills: ["Verified CORC", "Market Ready"]
+    }
+  ];
+
   return (
     <section className="flow-section" id="process">
-      <span className="section-label reveal">The transformation</span>
-      <h2 className="section-title reveal">WASTE → CHAR → CREDIT</h2>
+      <div className="section-header-wrap reveal">
+        <span className="section-label">THE TRANSFORMATION</span>
+        <h2 className="section-title">WASTE <span className="arrow">→</span> CHAR <span className="arrow">→</span> CREDIT</h2>
+      </div>
 
-      <div className="process-flow">
-        {/* 01 WASTE */}
-        <div className="process-step step-waste reveal">
-          <div className="step-spine">
-            <div className="step-icon-wrap">🌾</div>
-            <div className="step-connector"></div>
-          </div>
-          <div className="step-body">
-            <div className="step-number">01 / FEEDSTOCK</div>
-            <h3 className="step-title">Agricultural Waste</h3>
-            <p className="step-desc">
-              Crop residue — rice husk, paddy straw, sugarcane bagasse, coconut shells — is collected from fields and mills. This biomass contains carbon absorbed from the atmosphere during the plant's growth cycle. Normally it would decompose or burn openly, releasing all that carbon back as CO₂ within months.
-            </p>
-            <div className="mini-flow">
-              <div className="mini-node" style={{borderColor:'#5a7a40',color:'#a8c870'}}>Rice Husk</div>
-              <span className="mini-arrow">→</span>
-              <div className="mini-node" style={{borderColor:'#5a7a40',color:'#a8c870'}}>Paddy Straw</div>
-              <span className="mini-arrow">→</span>
-              <div className="mini-node" style={{borderColor:'#5a7a40',color:'#a8c870'}}>Coconut Shell</div>
-              <span className="mini-arrow">→</span>
-              <div className="mini-node" style={{borderColor:'#5a7a40',color:'#a8c870'}}>Wood Chips</div>
+      <div className="process-grid-linear">
+        {steps.map((step, i) => (
+          <div key={i} className="technical-step reveal">
+            <div className="step-marker-wrap">
+              <div className="step-marker">{step.num}</div>
             </div>
-            <div className="tag-row">
-              <span className="tag">Zero-cost feedstock</span>
-              <span className="tag">Farmer partnership</span>
-              <span className="tag">Carbon-loaded biomass</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 02 PYROLYSIS */}
-        <div className="process-step step-pyrolysis reveal">
-          <div className="step-spine">
-            <div className="step-icon-wrap">🔥</div>
-            <div className="step-connector"></div>
-          </div>
-          <div className="step-body">
-            <div className="step-number">02 / CONVERSION</div>
-            <h3 className="step-title">Pyrolysis</h3>
-            <p className="step-desc">
-              The biomass enters a sealed kiln or retort reactor and is heated to 400–700°C in near-absence of oxygen. Without oxygen it cannot combust — instead it undergoes thermochemical decomposition, breaking apart into three co-products simultaneously.
-            </p>
-            <div className="chem-block">
-              <div className="chem-label">Pyrolysis reaction</div>
-              <div className="chem-equation">
-                Biomass (C·H·O) <span className="arrow">──<sup className="heat">400–700°C, –O₂</sup>──→</span><br/>
-                <span style={{color:'#b0d8a0'}}>Biochar (stable C)</span> + <span style={{color:'#8ddc6e'}}>Syngas (CO + H₂)</span> + <span style={{color:'#a8c870'}}>Bio-oil (tar)</span>
+            <div className="step-content-box">
+              <div className="step-main-info">
+                <span className="spec-label" style={{ marginBottom: '10px', display: 'block' }}>{step.motive}</span>
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-desc">{step.desc}</p>
+                <div className="step-footer">
+                  {step.pills.map((p, pi) => (
+                    <span key={pi} className="process-pill">{p}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="step-tech-specs">
+                {step.specs.map((s, si) => (
+                  <div key={si} className="spec-row">
+                    <span className="spec-label">{s.label}</span>
+                    <span className="spec-value">{s.value}</span>
+                  </div>
+                ))}
               </div>
             </div>
-            <div style={{margin:'16px 0'}}>
-              <div className="temp-gauge">
-                <span className="temp-meta">Temp range</span>
-                <div className="temp-bar-wrap"><div className="temp-bar" style={{'--target-width':'75%'}}></div></div>
-                <span className="temp-label">700°C</span>
-              </div>
-            </div>
-            <div className="tag-row">
-              <span className="tag">No open burning</span>
-              <span className="tag">Syngas → energy</span>
-              <span className="tag">40–50% carbon yield</span>
-            </div>
           </div>
-        </div>
-
-        {/* 03 BIOCHAR */}
-        <div className="process-step step-char reveal">
-          <div className="step-spine">
-            <div className="step-icon-wrap">⬛</div>
-            <div className="step-connector"></div>
-          </div>
-          <div className="step-body">
-            <div className="step-number">03 / THE PRODUCT</div>
-            <h3 className="step-title">Biochar</h3>
-            <p className="step-desc">
-              What remains is biochar — a highly porous, recalcitrant carbon material. The original plant microstructure is preserved, creating vast internal surface area (up to 400 m²/g). Carbon is now locked in aromatic ring structures that resist microbial decomposition for centuries to millennia.
-            </p>
-            <div className="chem-block" style={{borderLeftColor:'#6a9c5e'}}>
-              <div className="chem-label" style={{color:'#6a9c5e'}}>Carbon structure after pyrolysis</div>
-              <div className="chem-equation" style={{fontSize:'0.8rem'}}>
-                <span style={{color:'#a0c890'}}>Labile cellulose/lignin</span> <span className="arrow">→</span> <span style={{color:'var(--cream)'}}>Polycyclic aromatic carbon</span><br/>
-                <span style={{color:'var(--mist)', opacity: 0.6}}>Half-life: weeks–months</span> <span className="arrow">→</span> <span style={{color:'var(--mist)'}}>Half-life: 100–10,000 years</span>
-              </div>
-            </div>
-            <div className="tag-row">
-              <span className="tag">Stable aromatic C</span>
-              <span className="tag">~80% carbon content</span>
-              <span className="tag">400m² surface/g</span>
-              <span className="tag">pH 7–10 liming effect</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 04 SOIL */}
-        <div className="process-step step-soil reveal">
-          <div className="step-spine">
-            <div className="step-icon-wrap">🌱</div>
-            <div className="step-connector"></div>
-          </div>
-          <div className="step-body">
-            <div className="step-number">04 / DEPLOYMENT</div>
-            <h3 className="step-title">Soil Application</h3>
-            <p className="step-desc">
-              Biochar is blended with compost or fertiliser and applied to agricultural soil at 2–10 tonnes/hectare. Its honeycomb pore structure retains water and nutrients, hosting beneficial microbes. For Odisha's rain-fed farmers this means reduced drought stress, lower fertiliser runoff, and measurable yield improvements.
-            </p>
-            <div className="mini-flow">
-              <div className="mini-node" style={{borderColor:'#8ddc6e',color:'#8ddc6e'}}>Water retention ↑</div>
-              <span className="mini-arrow">+</span>
-              <div className="mini-node" style={{borderColor:'#8ddc6e',color:'#8ddc6e'}}>Nutrient CEC ↑</div>
-              <span className="mini-arrow">+</span>
-              <div className="mini-node" style={{borderColor:'#8ddc6e',color:'#8ddc6e'}}>Microbial habitat</div>
-            </div>
-            <div className="tag-row">
-              <span className="tag">Farmer co-benefit</span>
-              <span className="tag">Yield uplift 10–30%</span>
-              <span className="tag">Reduced fertiliser use</span>
-            </div>
-          </div>
-        </div>
-
-        {/* 05 CREDITS */}
-        <div className="process-step step-credit reveal">
-          <div className="step-spine">
-            <div className="step-icon-wrap">📜</div>
-          </div>
-          <div className="step-body">
-            <div className="step-number">05 / MONETISATION</div>
-            <h3 className="step-title">Carbon Credits</h3>
-            <p className="step-desc">
-              Each tonne of CO₂-equivalent durably stored as biochar is verified and tokenised as a carbon credit. MRV protocols quantify removal via sampling, lab analysis, and modelling. Credits list on Puro.earth or Verra and sell to corporate buyers seeking high-permanence, co-benefit-rich offsets.
-            </p>
-            <div className="tag-row">
-              <span className="tag">Puro.earth eligible</span>
-              <span className="tag">Verra VCS / AMS-III</span>
-              <span className="tag">India CCTS pipeline</span>
-              <span className="tag">$80–200/tCO₂e</span>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
 };
 
 const PermanenceComparison = () => {
+  const steps = [
+    {
+      title: "Avoided Deforestation",
+      val: "20–30",
+      unit: "YEARS (ESTIMATED)",
+      note: "Reversible. Vulnerable to fire, logging, and policy shifts.",
+      color: "#7aaa50",
+      w: "15%"
+    },
+    {
+      title: "Soil Organic Carbon",
+      val: "5–50",
+      unit: "YEARS (ESTIMATED)",
+      note: "Vulnerable to tillage. Dependent on continuous management.",
+      color: "#4fc26a",
+      w: "25%"
+    },
+    {
+      title: "Biochar Removal",
+      val: "100–1,000+",
+      unit: "YEARS (VERIFIED)",
+      note: "Stable polycyclic structure. Physically inert once soil-applied.",
+      color: "var(--gold)",
+      w: "80%",
+      featured: true
+    },
+    {
+      title: "Direct Air Capture",
+      val: "1,000+",
+      unit: "YEARS (GEOLOGICAL)",
+      note: "Mineralized basalt storage. High stability, extremely high cost.",
+      color: "var(--mist)",
+      w: "100%"
+    }
+  ];
+
   return (
     <section className="permanence-section" id="permanence">
       <div className="permanence-inner">
-        <span className="section-label reveal">Why biochar wins on permanence</span>
-        <h2 className="permanence-title reveal">CARBON DURABILITY COMPARISON</h2>
-        <div className="compare-grid">
-          <div className="compare-card reveal">
-            <div className="method" style={{color:'#7aaa50'}}>Avoided Deforestation</div>
-            <div className="years" style={{color:'#7aaa50'}}>20–30</div>
-            <div className="unit">years (estimated)</div>
-            <p className="note">Reversible. Fire, policy change, or land use shift can release stored carbon rapidly.</p>
-            <div className="bar-fill" style={{'--bar-color':'#7aaa50'}} data-width="15%"></div>
-          </div>
-          <div className="compare-card reveal">
-            <div className="method" style={{color:'#4fc26a'}}>Soil Organic Carbon</div>
-            <div className="years" style={{color:'#4fc26a'}}>5–50</div>
-            <div className="unit">years (estimated)</div>
-            <p className="note">Vulnerable to tillage and degradation. Permanence dependent on ongoing land management.</p>
-            <div className="bar-fill" style={{'--bar-color':'#4fc26a'}} data-width="25%"></div>
-          </div>
-          <div className="compare-card reveal">
-            <div className="method" style={{color:'var(--gold)'}}>Biochar</div>
-            <div className="years" style={{color:'var(--gold)'}}>100–1,000+</div>
-            <div className="unit">years (verified)</div>
-            <p className="note">Polycyclic aromatic carbon resists decomposition. Physically stable once soil-applied.</p>
-            <div className="bar-fill" style={{'--bar-color':'var(--gold)'}} data-width="80%"></div>
-          </div>
-          <div className="compare-card reveal">
-            <div className="method" style={{color:'var(--mist)'}}>Direct Air Capture</div>
-            <div className="years" style={{color:'var(--cream)'}}>1,000+</div>
-            <div className="unit">years (geological)</div>
-            <p className="note">Mineralized storage in basalt or saline aquifers. Comparable permanence but 10–40× higher cost.</p>
-            <div className="bar-fill" style={{'--bar-color':'var(--mist)'}} data-width="100%"></div>
-          </div>
+        <div className="section-header-wrap reveal">
+          <span className="section-label">Technical Durability</span>
+          <h2 className="section-title">Carbon Permanence Scale</h2>
+        </div>
+
+        <div className="durability-grid-premium reveal">
+          {steps.map((s, i) => (
+            <div key={i} className={`durability-cell ${s.featured ? 'featured' : ''}`}>
+              <div className="cell-overlay" />
+              <div className="cell-content">
+                <span className="cell-method" style={{ color: s.color }}>{s.title}</span>
+                <div className="cell-data">
+                  <span className="cell-val" style={{ color: s.featured ? 'var(--gold)' : '#fff' }}>{s.val}</span>
+                  <span className="cell-unit">{s.unit}</span>
+                </div>
+                <p className="cell-note">{s.note}</p>
+                <div className="cell-bar-track">
+                  <div className="cell-bar-fill" style={{ '--bar-c': s.color }} data-width={s.w} />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -868,35 +886,59 @@ const CreditAnatomy = () => {
       <div className="credit-card reveal">
         <div className="credit-grid">
           <div className="credit-field">
-            <label>Issuer / Registry</label>
+            <div className="field-header">
+              <Award size={14} className="field-icon" />
+              <label>Issuer / Registry</label>
+            </div>
             <span className="value">Puro.earth · Verra VCS · India CCTS</span>
           </div>
           <div className="credit-field">
-            <label>Credit Unit</label>
+            <div className="field-header">
+              <Weight size={14} className="field-icon" />
+              <label>Credit Unit</label>
+            </div>
             <span className="value">1 tonne CO₂e removed and durably stored</span>
           </div>
           <div className="credit-field">
-            <label>Permanence Tier</label>
+            <div className="field-header">
+              <Clock size={14} className="field-icon" />
+              <label>Permanence Tier</label>
+            </div>
             <span className="value">Class III — 100+ year durable removal</span>
           </div>
           <div className="credit-field">
-            <label>Feedstock Origin</label>
+            <div className="field-header">
+              <Leaf size={14} className="field-icon" />
+              <label>Feedstock Origin</label>
+            </div>
             <span className="value">Agricultural residue — traceable farm-level sourcing</span>
           </div>
           <div className="credit-field">
-            <label>MRV Method</label>
+            <div className="field-header">
+              <Search size={14} className="field-icon" />
+              <label>MRV Method</label>
+            </div>
             <span className="value">Pyrolysis mass balance + soil sampling + EBC analysis</span>
           </div>
           <div className="credit-field">
-            <label>Co-Benefits</label>
+            <div className="field-header">
+              <HeartHandshake size={14} className="field-icon" />
+              <label>Co-Benefits</label>
+            </div>
             <span className="value">SDG 2, 13, 15 · Farmer income uplift · Soil fertility</span>
           </div>
           <div className="credit-field">
-            <label>Market Price</label>
+            <div className="field-header">
+              <Banknote size={14} className="field-icon" />
+              <label>Market Price</label>
+            </div>
             <span className="value">$80–200 per tCO₂e (voluntary) · ₹1,500–3,000 (CCTS)</span>
           </div>
           <div className="credit-field">
-            <label>Vintage</label>
+            <div className="field-header">
+              <Calendar size={14} className="field-icon" />
+              <label>Vintage</label>
+            </div>
             <span className="value">Year of pyrolysis + application + verification</span>
           </div>
         </div>
@@ -905,7 +947,123 @@ const CreditAnatomy = () => {
   );
 };
 
+const IntelligenceLayer = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const scrollRef = useRef(null);
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const scrollLeft = scrollRef.current.scrollLeft;
+    const itemWidth = scrollRef.current.offsetWidth * 0.85; // Matches flex: 0 0 85%
+    const index = Math.round(scrollLeft / (itemWidth + 16)); // 16 is the gap
+    setActiveSlide(index);
+  };
+
+  const cards = [
+    {
+      icon: <BrainCircuit size={22} color="var(--bright)" strokeWidth={1.5} />,
+      title: "AI Process Optimization",
+      items: [
+        { tag: "ML", tagClass: "ml", text: "Yield prediction from feedstock moisture & particle size using regression models" },
+        { tag: "AI", tagClass: "ai", text: "Real-time temperature setpoint optimization for carbon quality targets" },
+        { tag: "NLP", tagClass: "nlp", text: "Automated QA report generation from sensor data" },
+        { tag: "ALERT", tagClass: "alert", text: "Anomaly detection on reactor O₂ and pressure deviations" },
+        { tag: "AI", tagClass: "ai", text: "Feedstock blend optimization for maximum biochar surface area" }
+      ]
+    },
+    {
+      icon: <Radio size={22} color="#60a5fa" strokeWidth={1.5} />,
+      title: "IoT Sensor Network",
+      items: [
+        { tag: "IoT", tagClass: "iot", text: "32 temperature sensors across reactor zones, logged every 10s" },
+        { tag: "IoT", tagClass: "iot", text: "Gas analysers: CO, CO₂, H₂, CH₄ real-time monitoring" },
+        { tag: "IoT", tagClass: "iot", text: "Load cells on feedstock conveyor for continuous feed rate control" },
+        { tag: "IoT", tagClass: "iot", text: "Biochar quality scanner (NIR) at discharge point" },
+        { tag: "IoT", tagClass: "iot", text: "CHP power meter integrated into energy loop dashboard" }
+      ]
+    },
+    {
+      icon: <Layers size={22} color="#fbbf24" strokeWidth={1.5} />,
+      title: "Scalability Architecture",
+      items: [
+        { tag: "SCALE", tagClass: "scale", text: "Modular reactor units: add 500 kg/h capacity blocks independently" },
+        { tag: "SCALE", tagClass: "scale", text: "Multi-site orchestration from central cloud dashboard" },
+        { tag: "SCALE", tagClass: "scale", text: "API-first CRM: integrates with SAP, Salesforce, Zoho" },
+        { tag: "ROAD", tagClass: "road", text: "Blockchain-verified carbon credit chain-of-custody (Q3 2025)" },
+        { tag: "SCALE", tagClass: "scale", text: "White-label platform licensing for partner pyrolysis operators" }
+      ]
+    },
+    {
+      icon: <Globe size={22} color="var(--gold)" strokeWidth={1.5} />,
+      title: "Digital Twin Capabilities",
+      items: [
+        { tag: "TWIN", tagClass: "twin", text: "Physics-based thermal model synced to live sensor data every 30s" },
+        { tag: "TWIN", tagClass: "twin", text: "What-if simulation: test new feedstocks without physical trials" },
+        { tag: "TWIN", tagClass: "twin", text: "Predictive maintenance alerts from vibration & temperature trends" },
+        { tag: "TWIN", tagClass: "twin", text: "Carbon credit forward projection from production schedule" },
+        { tag: "BETA", tagClass: "beta", text: "Generative AI co-pilot for process recipe generation" }
+      ]
+    }
+  ];
+
+  return (
+    <section className="intel-section" id="intelligence">
+      <div className="section-header-wrap reveal">
+        <span className="section-label">Digital Infrastructure</span>
+        <h2 className="section-title">SCALABILITY & INTELLIGENCE LAYER</h2>
+      </div>
+      <div className="intel-grid reveal" ref={scrollRef} onScroll={handleScroll}>
+        {cards.map((card, i) => (
+          <div key={i} className="intel-card">
+            <div className="scan-line"></div>
+            <div className="intel-card-header">
+              <span className="intel-icon">{card.icon}</span>
+              <h3 className="intel-title">{card.title}</h3>
+            </div>
+            <ul className="intel-list">
+              {card.items.map((item, idx) => (
+                <li key={idx}>
+                  <span className={`intel-tag ${item.tagClass}`}>{item.tag}</span>
+                  <span className="intel-text">{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="intel-dots reveal">
+        {cards.map((_, i) => (
+          <div key={i} className={`intel-dot ${activeSlide === i ? 'active' : ''}`} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const App = () => {
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Handle bar fills if present
+          entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+            if (bar.dataset.width) {
+              setTimeout(() => {
+                bar.style.width = bar.dataset.width;
+              }, 200);
+            }
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const targets = document.querySelectorAll('.reveal');
+    targets.forEach(t => observer.observe(t));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="app-container">
       <Navbar />
@@ -914,10 +1072,71 @@ const App = () => {
       <TransformationFlow />
       <PermanenceComparison />
       <CreditAnatomy />
+      <IntelligenceLayer />
       <footer className="footer">
-        <div className="footer-content">
-          <img src="/images/GreenASHA-Logo.png" alt="GreenASHA" className="footer-logo-img" />
-          <p className="footer-sub">Pioneering Sustainable Horizons — © 2026 GREENASHA SOLUTIONS</p>
+        <div className="footer-overlay"></div>
+        <div className="footer-grid">
+
+          <div className="footer-brand-col">
+            <a href="/" className="nav-logo footer-logo-link">
+              <img src="/images/GreenASHA-Logo.png" alt="GreenASHA" className="brand-img" />
+            </a>
+            <p className="footer-description">
+              Deploying advanced continuous flow pyrolysis to transform agricultural waste into verifiable carbon removals and industrial-grade biochar.
+            </p>
+            <div className="footer-socials">
+              <a href="#" className="social-link" aria-label="Twitter/X">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4l16 16M4 20L20 4"/>
+                </svg>
+              </a>
+              <a href="#" className="social-link" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="3"/>
+                  <path d="M7 10v7M7 7v.01M11 10v7M11 13a3 3 0 0 1 6 0v4"/>
+                </svg>
+              </a>
+              <a href="#" className="social-link" aria-label="Email"><Mail size={18} /></a>
+            </div>
+          </div>
+
+          <div className="footer-links-col">
+            <h4 className="footer-heading">Platform</h4>
+            <a href="#process">Process Technology</a>
+            <a href="#permanence">Carbon Permanence</a>
+            <a href="#credits">Credit Anatomy</a>
+            <a href="#intelligence">Digital Twin Layer</a>
+          </div>
+
+          <div className="footer-links-col">
+            <h4 className="footer-heading">Resources</h4>
+            <a href="#" className="footer-ext">Whitepaper <ArrowUpRight size={13} /></a>
+            <a href="#" className="footer-ext">Methodology <ArrowUpRight size={13} /></a>
+            <a href="#">Life Cycle Analysis</a>
+            <a href="#">API Documentation</a>
+          </div>
+
+          <div className="footer-links-col">
+            <h4 className="footer-heading">Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Contact Support</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+
+        </div>
+
+        <div className="footer-bottom">
+          <p className="footer-copyright">&copy; 2026 GREENASHA SOLUTIONS. ALL RIGHTS RESERVED.</p>
+          <div className="footer-bottom-links">
+            <a href="#">Terms of Service</a>
+            <span className="dot-divider">&bull;</span>
+            <a href="#">Cookie Policy</a>
+            <span className="dot-divider">&bull;</span>
+            <div className="system-status">
+              <span className="live-dot"></span> Systems Operational
+            </div>
+          </div>
         </div>
       </footer>
     </div>
