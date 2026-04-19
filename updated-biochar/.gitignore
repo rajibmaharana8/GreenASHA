@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+dist/
+build/
+.env
+*.log
+.gemini/
+antigravity/
+brain/
+scratch/
+artifacts/
+temp/
