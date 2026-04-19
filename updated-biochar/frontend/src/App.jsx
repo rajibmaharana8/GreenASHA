@@ -546,14 +546,15 @@ const PyrolysisStory = () => {
 
                 {/* ─── MATERIAL LEGEND BAR ─── */}
                 <g>
-                  <rect x="360" y="655" width="1000" height="28" rx="14"
+                   {/* Center is 860. Width 860 -> x = 860 - 430 = 430 */}
+                  <rect x="430" y="655" width="860" height="28" rx="14"
                     fill="rgba(5,14,8,0.95)" stroke="rgba(141,220,110,0.25)" strokeWidth="1"/>
                   {[
-                    { cx:410, col:'#8ddc6e', label:'BIOMASS',  filter:'url(#glow-g)'  },
-                    { cx:550, col:'#ff8c00', label:'650°C HEAT',filter:'url(#glow-o)' },
-                    { cx:715, col:'#ffc340', label:'SYNGAS',   filter:'url(#glow-o)'  },
-                    { cx:860, col:'#00d4b4', label:'BIO-OIL',  filter:'url(#glow-b)'  },
-                    { cx:1000, col:'#4fc26a', label:'BIOCHAR',  filter:'url(#glow-g)'  },
+                    { cx:480, col:'#8ddc6e', label:'BIOMASS',  filter:'url(#glow-g)'  },
+                    { cx:645, col:'#ff8c00', label:'650°C HEAT',filter:'url(#glow-o)' },
+                    { cx:830, col:'#ffc340', label:'SYNGAS',   filter:'url(#glow-o)'  },
+                    { cx:1005, col:'#00d4b4', label:'BIO-OIL',  filter:'url(#glow-b)'  },
+                    { cx:1175, col:'#4fc26a', label:'BIOCHAR',  filter:'url(#glow-g)'  },
                   ].map(({ cx, col, label, filter: f }) => (
                     <g key={label}>
                       <circle cx={cx} cy={669} r="5" fill={col} filter={f}/>
@@ -563,8 +564,8 @@ const PyrolysisStory = () => {
                       </text>
                     </g>
                   ))}
-                  {/* dividers */}
-                  {[530, 695, 840, 980].map(x => (
+                  {/* dividers: perfectly spaced between items */}
+                  {[562, 737, 917, 1090].map(x => (
                     <line key={x} x1={x} y1="662" x2={x} y2="676" stroke="rgba(255,255,255,0.15)" strokeWidth="1"/>
                   ))}
                 </g>
